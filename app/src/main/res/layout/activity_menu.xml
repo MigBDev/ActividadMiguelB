@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Menú Principal"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="60dp" />
+
+    <Button
+        android:id="@+id/btnAgenda"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#3F51B5"
+        android:onClick="irAgenda"
+        android:text="Agenda"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnCalculadora"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:backgroundTint="#3F51B5"
+        android:onClick="irCalculadora"
+        android:text="Calculadora"
+        android:textSize="20sp" />
+
+</LinearLayout>

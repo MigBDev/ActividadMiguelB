@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selecciona tus Gustos"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Puedes elegir uno o más"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:layout_marginBottom="20dp" />
+
+        <CheckBox android:id="@+id/cbGMusica"      android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎵  Música"      android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbGDeporte"     android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⚽  Deporte"     android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbGCine"        android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎬  Cine"        android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbGLectura"     android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📚  Lectura"     android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbGViajes"      android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="✈️  Viajes"      android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbGCocina"      android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🍳  Cocina"      android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbGJuegos"      android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎮  Juegos"      android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbGFotografia"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="📷  Fotografía"  android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbGBaile"       android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="💃  Baile"       android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbGTeatro"      android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎭  Teatro"      android:textSize="16sp" android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#3F51B5"
+            android:onClick="confirmarGustos"
+            android:text="Confirmar gustos" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#3F51B5"
+            android:onClick="regresar"
+            android:text="← Regresar sin guardar" />
+
+    </LinearLayout>
+</ScrollView>

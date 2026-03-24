@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selecciona tus Preferencias"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Puedes elegir una o más"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:layout_marginBottom="20dp" />
+
+        <CheckBox android:id="@+id/cbPTecnologia"     android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="💻  Tecnología"     android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbPNaturaleza"     android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🌿  Naturaleza"     android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbPArte"           android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🎨  Arte"           android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbPCiencia"        android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🔬  Ciencia"        android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbPModa"           android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="👗  Moda"           android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbPPolitica"       android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏛️  Política"       android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbPReligion"       android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🙏  Religión"       android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbPSalud"          android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🏥  Salud"          android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbPEmprendimiento" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🚀  Emprendimiento" android:textSize="16sp" android:layout_marginBottom="10dp"/>
+        <CheckBox android:id="@+id/cbPAnimales"       android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🐾  Animales"       android:textSize="16sp" android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#2196F3"
+            android:onClick="confirmarPreferencias"
+            android:text="Confirmar preferencias" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#3F51B5"
+            android:onClick="regresar"
+            android:text="← Regresar sin guardar" />
+
+    </LinearLayout>
+</ScrollView>

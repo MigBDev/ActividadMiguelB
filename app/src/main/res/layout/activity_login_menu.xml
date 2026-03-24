@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp">
+
+    <TextView
+        android:layout_width="385dp"
+        android:layout_height="76dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="Bienvenido"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:text="Selecciona una opcion"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/btnPanelAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#3F51B5"
+        android:onClick="irPanelAdmin"
+        android:text="Panel Admin"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnLoginUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:backgroundTint="#3F51B5"
+        android:onClick="irLoginUsuario"
+        android:text="Login Usuario"
+        android:textSize="18sp" />
+
+</LinearLayout>
