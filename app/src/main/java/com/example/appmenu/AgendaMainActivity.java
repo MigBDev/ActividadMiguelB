@@ -18,13 +18,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class AgendaMainActivity extends AppCompatActivity {
 
-
     static final int REQ_GUSTOS       = 1;
     static final int REQ_PREFERENCIAS = 2;
+
+    static final String FILE_NAME = "usuarios.dat";
 
     EditText edtCedula, edtNombre, edtApellido;
     EditText edtTelefono, edtCorreo, edtDireccion;
@@ -35,16 +39,12 @@ public class AgendaMainActivity extends AppCompatActivity {
     Button btnRegistrar, btnIrBusqueda;
     Button btnSeleccionarGustos, btnSeleccionarPreferencias;
 
-
     TextView tvResumenGustos, tvResumenPreferencias;
-
 
     ArrayList<String> gustosTemp       = new ArrayList<>();
     ArrayList<String> preferenciasTemp = new ArrayList<>();
 
-
     static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-
 
     ActivityResultLauncher<Intent> launherGustos =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -90,23 +90,26 @@ public class AgendaMainActivity extends AppCompatActivity {
         btnSeleccionarPreferencias = findViewById(R.id.btnSeleccionarPreferencias);
         tvResumenGustos            = findViewById(R.id.tvResumenGustos);
         tvResumenPreferencias      = findViewById(R.id.tvResumenPreferencias);
+
+        // ── Cargar usuarios desde archivo al iniciar ──────────────────────────
+        listaUsuarios = cargarUsuarios();
     }
 
-    // ── Abrir pantalla de Gustos
+    // ── Abrir pantalla de Gustos ──────────────────────────────────────────────
     public void abrirGustos(View v) {
         Intent i = new Intent(this, GustosActivity.class);
         i.putExtra(GustosActivity.KEY_GUSTOS, gustosTemp);
         launherGustos.launch(i);
     }
 
-    // ── Abrir pantalla de Preferencias ────────────────────────────────────────
+    // ── Abrir pantalla de Preferencias ───────────────────────────────────────
     public void abrirPreferencias(View v) {
         Intent i = new Intent(this, PreferenciasActivity.class);
         i.putExtra(PreferenciasActivity.KEY_PREFERENCIAS, preferenciasTemp);
         launcherPreferencias.launch(i);
     }
 
-    // ── Registrar usuario ──────────────────────────────────────────────────────
+    // ── Registrar usuario ─────────────────────────────────────────────────────
     public void registrarUsuario(View v) {
         String cedula    = edtCedula.getText().toString().trim();
         String nombre    = edtNombre.getText().toString().trim();
@@ -150,6 +153,7 @@ public class AgendaMainActivity extends AppCompatActivity {
         u.setPreferencias(new ArrayList<>(preferenciasTemp));
 
         listaUsuarios.add(u);
+        guardarUsuarios();  // ── Persistir en archivo ──
         Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
         limpiarFormulario();
     }
@@ -169,5 +173,30 @@ public class AgendaMainActivity extends AppCompatActivity {
         preferenciasTemp.clear();
         tvResumenGustos.setText("Gustos seleccionados: 0");
         tvResumenPreferencias.setText("Preferencias seleccionadas: 0");
+    }
+
+    // ── Guardar lista completa serializada ────────────────────────────────────
+    static void guardarUsuarios(android.content.Context ctx) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                ctx.openFileOutput(FILE_NAME, MODE_PRIVATE))) {
+            oos.writeObject(listaUsuarios);
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    // Sobrecarga para llamarlo desde la misma Activity sin pasar contexto
+    private void guardarUsuarios() {
+        guardarUsuarios(this);
+    }
+
+    // ── Cargar lista deserializando ───────────────────────────────────────────
+    @SuppressWarnings("unchecked")
+    private ArrayList<Usuario> cargarUsuarios() {
+        try (ObjectInputStream ois = new ObjectInputStream(
+                openFileInput(FILE_NAME))) {
+            return (ArrayList<Usuario>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

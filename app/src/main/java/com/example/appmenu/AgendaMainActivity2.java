@@ -17,6 +17,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 public class AgendaMainActivity2 extends AppCompatActivity {
@@ -24,21 +26,17 @@ public class AgendaMainActivity2 extends AppCompatActivity {
     EditText edtBuscarId;
     LinearLayout layoutResultado, layoutEdicion;
 
-    // TextViews
     TextView tvResultCedula, tvResultNombre, tvResultApellido;
     TextView tvResultTelefono, tvResultCorreo, tvResultDireccion;
     TextView tvResultFecha, tvResultSexo, tvResultGustos, tvResultPreferencias;
 
-    // EditTexts
     EditText edtEditNombre, edtEditApellido, edtEditTelefono;
     EditText edtEditCorreo, edtEditDireccion, edtEditFecha;
 
     Button btnEditar, btnGuardarCambios, btnCancelarEdicion;
 
-    // Usuario
     Usuario usuarioActual = null;
 
-    //Arrays
     ArrayList<String> gustosEditados       = new ArrayList<>();
     ArrayList<String> preferenciasEditadas = new ArrayList<>();
 
@@ -98,9 +96,19 @@ public class AgendaMainActivity2 extends AppCompatActivity {
 
         layoutResultado.setVisibility(View.GONE);
         layoutEdicion.setVisibility(View.GONE);
+
+        // ── Si la lista está vacía, cargar desde archivo serializado ──────────
+        if (AgendaMainActivity.listaUsuarios.isEmpty()) {
+            try (ObjectInputStream ois = new ObjectInputStream(
+                    openFileInput(AgendaMainActivity.FILE_NAME))) {
+                AgendaMainActivity.listaUsuarios = (ArrayList<Usuario>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    // ── Buscar por cédula ──────────────────────────────────────────────────────
+    // ── Buscar por cédula ─────────────────────────────────────────────────────
     public void buscarUsuario(View v) {
         String idBuscar = edtBuscarId.getText().toString().trim();
         if (idBuscar.isEmpty()) {
@@ -124,14 +132,14 @@ public class AgendaMainActivity2 extends AppCompatActivity {
     }
 
     private void mostrarUsuario(Usuario u) {
-        tvResultCedula.setText("Cédula: "             + u.getCedula());
-        tvResultNombre.setText("Nombre: "             + u.getNombre());
-        tvResultApellido.setText("Apellido: "         + u.getApellido());
-        tvResultTelefono.setText("Teléfono: "         + u.getTelefono());
-        tvResultCorreo.setText("Correo: "             + u.getCorreo());
-        tvResultDireccion.setText("Dirección: "       + u.getDireccion());
-        tvResultFecha.setText("Fecha nacimiento: "    + u.getFechaNacimiento());
-        tvResultSexo.setText("Sexo: "                 + u.getSexo());
+        tvResultCedula.setText("Cédula: "         + u.getCedula());
+        tvResultNombre.setText("Nombre: "          + u.getNombre());
+        tvResultApellido.setText("Apellido: "      + u.getApellido());
+        tvResultTelefono.setText("Teléfono: "      + u.getTelefono());
+        tvResultCorreo.setText("Correo: "          + u.getCorreo());
+        tvResultDireccion.setText("Dirección: "    + u.getDireccion());
+        tvResultFecha.setText("Fecha nacimiento: " + u.getFechaNacimiento());
+        tvResultSexo.setText("Sexo: "              + u.getSexo());
 
         StringBuilder sbG = new StringBuilder();
         u.getGustos().forEach(g -> sbG.append("• ").append(g).append("\n"));
@@ -144,7 +152,7 @@ public class AgendaMainActivity2 extends AppCompatActivity {
         layoutResultado.setVisibility(View.VISIBLE);
     }
 
-    // ── Mostrar Modificar──
+    // ── Activar edición ───────────────────────────────────────────────────────
     public void activarEdicion(View v) {
         if (usuarioActual == null) return;
 
@@ -160,21 +168,21 @@ public class AgendaMainActivity2 extends AppCompatActivity {
         layoutEdicion.setVisibility(View.VISIBLE);
     }
 
-    // ── Gustos en modo modificar ───────────────────────────────────────────
+    // ── Gustos en modo modificar ──────────────────────────────────────────────
     public void editarGustos(View v) {
         Intent i = new Intent(this, GustosActivity.class);
         i.putExtra(GustosActivity.KEY_GUSTOS, gustosEditados);
         launcherGustosEditar.launch(i);
     }
 
-    // ── Preferencias en modo modificar ────────────────────────────────────
+    // ── Preferencias en modo modificar ───────────────────────────────────────
     public void editarPreferencias(View v) {
         Intent i = new Intent(this, PreferenciasActivity.class);
         i.putExtra(PreferenciasActivity.KEY_PREFERENCIAS, preferenciasEditadas);
         launcherPrefsEditar.launch(i);
     }
 
-    // ── Guardar cambios  ────────────────────────────────
+    // ── Guardar cambios y persistir en archivo ────────────────────────────────
     public void guardarCambios(View v) {
         if (usuarioActual == null) return;
 
@@ -186,6 +194,8 @@ public class AgendaMainActivity2 extends AppCompatActivity {
         usuarioActual.setFechaNacimiento(edtEditFecha.getText().toString().trim());
         usuarioActual.setGustos(gustosEditados);
         usuarioActual.setPreferencias(preferenciasEditadas);
+
+        AgendaMainActivity.guardarUsuarios(this); // ── Persistir serializado ──
 
         Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
         mostrarUsuario(usuarioActual);
